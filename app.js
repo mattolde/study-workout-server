@@ -59,6 +59,8 @@ var postNewWorkout = function(req , res , next){
   workout.rating = req.params.rating;
   workout.estimatedTime = req.params.estimatedTime;
   workout.description = req.params.description;
+  workout.count = 0;
+  workout.bestTime = null;
 
   res.setHeader('Access-Control-Allow-Origin','*');
 
@@ -77,8 +79,6 @@ var postNewWorkout = function(req , res , next){
 var updateWorkout = function(req, res, next){
   res.setHeader('Access-Control-Allow-Origin','*');
 
-  console.log(req.params.name);
-
   workouts.findAndModify({
       query: { _id: mongojs.ObjectId(req.params._id) },
       update: { 
@@ -87,7 +87,9 @@ var updateWorkout = function(req, res, next){
                         category: req.params.category,
                         rating: req.params.rating,
                         estimatedTime: req.params.estimatedTime,
-                        description: req.params.description
+                        description: req.params.description,
+                        count: req.params.count,
+                        bestTime: req.params.bestTime
                       }
               },
       new: true
@@ -183,8 +185,6 @@ var postNewExercise = function(req , res , next){
 
 var updateExercise = function(req, res, next){
   res.setHeader('Access-Control-Allow-Origin','*');
-
-  console.log(req.params.name);
 
   exercises.findAndModify({
       query: { _id: mongojs.ObjectId(req.params._id) },
